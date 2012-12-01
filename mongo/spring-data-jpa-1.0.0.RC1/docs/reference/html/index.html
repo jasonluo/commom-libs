@@ -1,0 +1,710 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Spring Data JPA - Reference Documentation</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="d0e1"></a>Spring Data JPA - Reference Documentation</h1></div><div><div xmlns:fo="http://www.w3.org/1999/XSL/Format" class="authorgroup"><h2>Authors</h2><p></p><span class="author"><span class="firstname">Oliver</span> <span class="surname">Gierke</span></span></div></div><div><p class="releaseinfo">1.0.0.RC1</p></div><div><p class="copyright">Copyright &copy; 2008-2011 The original authors</p></div><div><div class="legalnotice"><a name="d0e20"></a><p>Copies of this document may be made for your own use and for
+      distribution to others, provided that you do not charge any fee for such
+      copies and further provided that each copy contains this Copyright
+      Notice, whether distributed in print or electronically.</p></div></div><div><p class="pubdate"></p></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><b>Revision History</b></th></tr><tr><td align="left"></td><td align="left">09.02.2011</td><td align="left"><span xmlns:fo="http://www.w3.org/1999/XSL/Format" class="author"><span class="firstname">Oliver</span> <span class="surname">Gierke</span></span></td></tr><tr><td align="left" colspan="3">Initial port from Hades documentation</td></tr></table></div></div></div><hr></div><div class="toc"><dl><dt><span class="preface"><a href="#preface">Preface</a></span></dt><dd><dl><dt><span class="section"><a href="#project">1. Project metadata</a></span></dt></dl></dd><dt><span class="part"><a href="#reference">I. Reference Documentation</a></span></dt><dd><dl><dt><span class="chapter"><a href="#repositories">1. Repositories</a></span></dt><dd><dl><dt><span class="section"><a href="#repositories.introduction">1.1. Introduction</a></span></dt><dt><span class="section"><a href="#repositories.core-concepts">1.2. Core concepts</a></span></dt><dt><span class="section"><a href="#repositories.query-methods">1.3. Query methods</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e173">1.3.1. Defining repository interfaces</a></span></dt><dt><span class="section"><a href="#d0e181">1.3.2. Defining query methods</a></span></dt><dd><dl><dt><span class="section"><a href="#repositories.query-methods.query-lookup-strategies">1.3.2.1. Query lookup strategies</a></span></dt><dt><span class="section"><a href="#repositories.query-methods.query-creation">1.3.2.2. Query creation</a></span></dt><dt><span class="section"><a href="#repositories.special-parameters">1.3.2.3. Special parameter handling</a></span></dt></dl></dd><dt><span class="section"><a href="#d0e345">1.3.3. Creating repository instances</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e350">1.3.3.1. Spring</a></span></dt><dt><span class="section"><a href="#d0e422">1.3.3.2. Standalone usage</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#repositories.custom-implementations">1.4. Custom implementations</a></span></dt><dd><dl><dt><span class="section"><a href="#repositories.single-repository-behaviour">1.4.1. Adding behaviour to single repositories</a></span></dt><dt><span class="section"><a href="#repositories.custom-behaviour-for-all-repositories">1.4.2. Adding custom behaviour to all repositories</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#jpa.repositories">2. JPA Repositories</a></span></dt><dd><dl><dt><span class="section"><a href="#jpa.query-methods">2.1. Query methods</a></span></dt><dd><dl><dt><span class="section"><a href="#jpa.sample-app.finders.strategies">2.1.1. Query lookup strategies</a></span></dt><dt><span class="section"><a href="#jpa.query-methods.query-creation">2.1.2. Query creation</a></span></dt><dt><span class="section"><a href="#jpa.query-methods.named-queries">2.1.3. Using JPA NamedQueries</a></span></dt><dt><span class="section"><a href="#jpa.query-methods.at-query">2.1.4. Using @Query</a></span></dt><dt><span class="section"><a href="#jpa.named-parameters">2.1.5. Using named parameters</a></span></dt><dt><span class="section"><a href="#jpa.modifying-queries">2.1.6. Modifying queries</a></span></dt></dl></dd><dt><span class="section"><a href="#specifications">2.2. Specifications</a></span></dt><dt><span class="section"><a href="#transactions">2.3. Transactionality</a></span></dt><dd><dl><dt><span class="section"><a href="#transactional-query-methods">2.3.1. Transactional query methods</a></span></dt></dl></dd><dt><span class="section"><a href="#jpa.auditing">2.4. Auditing</a></span></dt><dt><span class="section"><a href="#jpa.misc">2.5. Miscellaneous</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e1176">2.5.1. Merging persistence units</a></span></dt></dl></dd></dl></dd></dl></dd><dt><span class="part"><a href="#appendix">II. Appendix</a></span></dt><dd><dl><dt><span class="appendix"><a href="#namespace-reference">A. Namespace reference</a></span></dt><dd><dl><dt><span class="section"><a href="#namespace-dao-config">A.1. The <code class="code">&lt;repositories /&gt;</code> element</a></span></dt><dt><span class="section"><a href="#namespace-dao">A.2. The <code class="code">&lt;repository /&gt;</code> element</a></span></dt></dl></dd><dt><span class="appendix"><a href="#faq">B. Frequently asked questions</a></span></dt><dt><span class="glossary"><a href="#glossary">Glossary</a></span></dt></dl></dd></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="preface"></a>Preface</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="project"></a>1.&nbsp;Project metadata</h2></div></div></div><div class="itemizedlist"><ul type="disc" compact><li><p>Version control - <a xmlns:xlink="http://www.w3.org/1999/xlink" href="git://github.com/SpringSource/spring-data-jpa.git" target="_top">git://github.com/SpringSource/spring-data-jpa.git</a></p></li><li><p>Bugtracker - <a xmlns:xlink="http://www.w3.org/1999/xlink" href="https://jira.springsource.org/browse/DATAJPA" target="_top">https://jira.springsource.org/browse/DATAJPA</a></p></li><li><p>Release repository - <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://maven.springframework.org/release" target="_top">http://maven.springframework.org/release</a></p></li><li><p>Milestone repsitory - <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://maven.springframework.org/milestone" target="_top">http://maven.springframework.org/milestone</a></p></li><li><p>Snapshot repsitory - <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://maven.springframework.org/snapshot" target="_top">http://maven.springframework.org/snapshot</a></p></li></ul></div></div></div><div class="part" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="reference"></a>Part&nbsp;I.&nbsp;Reference Documentation</h1></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="repositories"></a>Chapter&nbsp;1.&nbsp;Repositories</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="repositories.introduction"></a>1.1.&nbsp;Introduction</h2></div></div></div><p>Implementing a data access layer of an application has been
+    cumbersome for quite a while. Too much boilerplate code had to be written.
+    Domain classes were anemic and haven't been designed in a real object
+    oriented or domain driven manner.</p><p>Using both of these technologies makes developers life a lot easier
+    regarding rich domain model's persistence. Nevertheless the amount of
+    boilerplate code to implement repositories especially is still quite high.
+    So the goal of the repository abstraction of Spring Data is to reduce the
+    effort to implement data access layers for various persistence stores
+    significantly</p><p>The following chapters will introduce the core concepts and
+    interfaces of Spring Data repositories.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="repositories.core-concepts"></a>1.2.&nbsp;Core concepts</h2></div></div></div><p>The central interface in Spring Data repository abstraction is
+    <code class="interfacename">Repository</code> (probably not that much of a
+    surprise). It is typeable to the domain class to manage as well as the id
+    type of the domain class and provides some sophisticated functionality
+    around CRUD for the entity managed.</p><div class="example"><a name="repositories.repository"></a><p class="title"><b>Example&nbsp;1.1.&nbsp;Repository interface</b></p><div class="example-contents"><div class="programlistingco"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> Repository&lt;T, ID <span class="hl-keyword">extends</span> Serializable&gt; {
+
+    T save(T entity);                                                                    <span class="co"><img src="images/callouts/1.png" alt="(1)"></span>
+
+    T findById(ID primaryKey);                                                           <span class="co"><img src="images/callouts/2.png" alt="(2)"></span>
+
+    List&lt;T&gt; findAll();                                                                   <span class="co"><img src="images/callouts/3.png" alt="(3)"></span>
+
+    Page&lt;T&gt; findAll(Pageable pageable);                                                  <span class="co"><img src="images/callouts/4.png" alt="(4)"></span>
+
+    Long count();                                                                        <span class="co"><img src="images/callouts/5.png" alt="(5)"></span>
+
+    <span class="hl-keyword">void</span> delete(T entity);                                                               <span class="co"><img src="images/callouts/6.png" alt="(6)"></span>
+
+    <span class="hl-keyword">boolean</span> exists(ID primaryKey);                                                       <span class="co"><img src="images/callouts/7.png" alt="(7)"></span>
+
+    <span class="hl-comment">// &#8230; more functionality omitted.</span>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><img src="images/callouts/1.png" alt="1" border="0"></td><td valign="top" align="left"><p>Saves the given entity.</p></td></tr><tr><td width="5%" valign="top" align="left"><img src="images/callouts/2.png" alt="2" border="0"></td><td valign="top" align="left"><p>Returns the entity identified by the given id.</p></td></tr><tr><td width="5%" valign="top" align="left"><img src="images/callouts/3.png" alt="3" border="0"></td><td valign="top" align="left"><p>Returns all entities.</p></td></tr><tr><td width="5%" valign="top" align="left"><img src="images/callouts/4.png" alt="4" border="0"></td><td valign="top" align="left"><p>Returns a page of entities.</p></td></tr><tr><td width="5%" valign="top" align="left"><img src="images/callouts/5.png" alt="5" border="0"></td><td valign="top" align="left"><p>Returns the number of entities.</p></td></tr><tr><td width="5%" valign="top" align="left"><img src="images/callouts/6.png" alt="6" border="0"></td><td valign="top" align="left"><p>Deletes the given entity.</p></td></tr><tr><td width="5%" valign="top" align="left"><img src="images/callouts/7.png" alt="7" border="0"></td><td valign="top" align="left"><p>Returns whether an entity with the given id exists.</p></td></tr></table></div></div></div></div><br class="example-break"><p>Usually we will have persistence technology specific sub-interfaces
+    to include additional technology specific methods. We will now ship
+    implementations for a variety of Spring Data modules that implement that
+    interface.</p><p>On top of the Repository there is a PagingAndSortingRepository
+    abstraction that adds additional methods to ease paginated access to
+    entities:</p><div class="example"><a name="d0e136"></a><p class="title"><b>Example&nbsp;1.2.&nbsp;PagingAndSortingRepository</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> PagingAndSortingRepository&lt;T, ID <span class="hl-keyword">extends</span> Serializable&gt; <span class="hl-keyword">extends</span> Repository&lt;T, ID&gt; {
+
+    List&lt;T&gt; findAll(Sort sort);
+
+    Page&lt;T&gt; findAll(Pageable pageable);
+}</pre></div></div><br class="example-break"><p>Accessing the second page of User by a page size of 20 you could
+    simply do something like this:</p><pre class="programlisting">PagingAndSortingRepository&lt;User, Long&gt; repository = // &#8230; get access to a bean
+Page&lt;User&gt; users = repository.findAll(new PageRequest(1, 20);</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="repositories.query-methods"></a>1.3.&nbsp;Query methods</h2></div></div></div><p>Next to standard CRUD functionality repositories are usually query
+    the underlying datastore. With Spring Data declaring those queries becomes
+    a four-step process (we use the JPA based module as example but that works
+    the same way for other stores):</p><div class="orderedlist"><ol type="1"><li><p>Declare an interface extending the technology specific
+        Repository sub-interface and type it to the domain class it shall
+        handle.</p><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> PersonRepository <span class="hl-keyword">extends</span> JpaRepository&lt;User, Long&gt; { &#8230; }</pre></li><li><p>Declare query methods on the interface.</p><pre class="programlisting">List&lt;Person&gt; findByLastname(String lastname);</pre></li><li><p>Setup Spring to create proxy instances for those
+        interfaces.</p><pre class="programlisting">&lt;<span class="hl-tag">?xml version="1.0" encoding="UTF-8"?</span>&gt;
+&lt;<span class="hl-tag">beans:beans</span> <span class="hl-attribute">xmlns:beans</span>=<span class="hl-value">"http://www.springframework.org/schema/beans"</span>
+  <span class="hl-attribute">xmlns:xsi</span>=<span class="hl-value">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  <span class="hl-attribute">xmlns</span>=<span class="hl-value">"http://www.springframework.org/schema/data/jpa
+  xsi:schemaLocation="</span><span class="hl-attribute">http://www.springframework.org/schema/beans</span> 
+    <span class="hl-attribute">http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+    <span class="hl-attribute">http://www.springframework.org/schema/data/jpa</span>
+    <span class="hl-attribute">http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"&gt;</span>
+
+  <span class="hl-attribute">&lt;repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repositories"</span> /&gt;
+
+&lt;<span class="hl-tag">/beans</span>&gt;</pre></li><li><p>Get the repository instance injected and use it.</p><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> SomeClient {
+
+  @Autowired
+  <span class="hl-keyword">private</span> PersonRepoyitory repository;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> doSomething() {
+    List&lt;Person&gt; persons = repository.findByLastname(<span class="hl-string">"Matthews"</span>);
+  }</pre></li></ol></div><p>At this stage we barely scratched the surface of what's possible
+    with the repositories but the general approach should be clear. Let's go
+    through each of these steps and and figure out details and various options
+    that you have at each stage.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e173"></a>1.3.1.&nbsp;Defining repository interfaces</h3></div></div></div><p>As a very first step you define a domain class specific repository
+      interface to start with. It's got to be typed to the domain class and an
+      ID type so that you get CRUD methods of the
+      <code class="interfacename">Repository</code> interface tailored to
+      it.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e181"></a>1.3.2.&nbsp;Defining query methods</h3></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repositories.query-methods.query-lookup-strategies"></a>1.3.2.1.&nbsp;Query lookup strategies</h4></div></div></div><p>The next thing we have to discuss is the definition of query
+        methods. There's roughly two main ways how the repository proxy is
+        generally able to come up with the store specific query from the
+        method name. The first option is to derive the quer from the method
+        name directly, the second is using some kind of additionally created
+        query. What detailed options are available pretty much depends on the
+        actual store. However there's got to be some algorithm the decision
+        which actual query to is made.</p><p>There's three strategies for the repository infrastructure to
+        resolve the query. The strategy to be used can be configured at the
+        namespace through the <code class="code">query-lookup-strategy</code> attribute.
+        However might be the case that some of the strategies are not
+        supported for the specific datastore. Here are your options:</p><div class="simplesect" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e194"></a>CREATE</h5></div></div></div><p>This strategy will try to construct a store specific query
+          from the query method's name. The general approach is to remove a
+          given set of well-known prefixes from the method name and parse the
+          rest of the method. Read more about query construction in <a href="#">???</a>.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e201"></a>USE_DECLARED_QUERY</h5></div></div></div><p>This strategy tries to find a declared query which will be
+          used for execution first. The query could be defined by an
+          annotation somwhere or declared by other means. Please consult the
+          documentation of the specific store to find out what options are
+          available for that store. If the repository infrastructure does not
+          find a declared query for the method at bootstrap time it will
+          fail.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e206"></a>CREATE_IF_NOT_FOUND (default)</h5></div></div></div><p>This strategy is actually a combination of the both mentioned
+          above. It will try to lookup a declared query first but create a
+          custom method name based query if no declared query was found. This
+          is default lookup strategy and thus will be used if you don't
+          configure anything explicitly. It allows quick query definition by
+          method names but also custom tuning of these queries by introducing
+          declared queries for those who need explicit tuning.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repositories.query-methods.query-creation"></a>1.3.2.2.&nbsp;Query creation</h4></div></div></div><p>The query builder mechanism built into Spring Data repository
+        infrastructue is useful to build constraining queries over entities of
+        the repository. We will strip the prefixes <code class="code">findBy</code>,
+        <code class="code">find</code>, <code class="code">readBy</code>, <code class="code">read</code>,
+        <code class="code">getBy</code> as well as <code class="code">get</code> from the method and
+        start parsing the rest of it. At a very basic level you can define
+        conditions on entity properties and concatenate them with
+        <code class="code">AND</code> and <code class="code">OR</code>.</p><div class="example"><a name="d0e240"></a><p class="title"><b>Example&nbsp;1.3.&nbsp;Query creation from method names</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> PersonRepository <span class="hl-keyword">extends</span> JpaRepository&lt;User, Long&gt; {
+
+  List&lt;Person&gt; findByEmailAddressAndLastname(EmailAddress emailAddress, String lastname);
+}</pre></div></div><br class="example-break"><p>The actual result of parsing that method will of course depend
+        on the persistence store we create the query for. However there are
+        some general things to notice. The expression are usually property
+        traversals combined with operators that can be concatenated. As you
+        can see in the example you can combine property expressions with And
+        and Or. Beyond that you will get support for various operators like
+        <code class="literal">Between</code>, <code class="literal">LessThan</code>,
+        <code class="literal">GreaterThan</code>, <code class="literal">Like</code> for the
+        property expressions. As the operators supported can vary from
+        datastore to datastore please consult the according part of the
+        reference documentation.</p><div class="section" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="repositories.query-methods.property-expressions"></a>1.3.2.2.1.&nbsp;Property expressions</h5></div></div></div><p>Property expressions can just refer to a direct property of
+          the managed entity (as you just saw in the example above. On query
+          creation time we already make sure that the parsed property is at a
+          property of the managed domain class. However you can also traverse
+          nested properties to define constraints on. Assume
+          <code class="classname">Person</code>s have <code class="classname">Address</code>es
+          with <code class="classname">ZipCode</code>s. In that case a method name
+          of</p><pre class="programlisting">List&lt;Person&gt; findByAddressZipCode(ZipCode zipCode);</pre><p>will create the property traversal
+          <code class="code">x.address.zipCode</code>. The resolution algorithm starts with
+          interpreting the entire part (<code class="literal">AddressZipCode</code>) as
+          property and checks the domain class for a property with that name
+          (uncapitalized). If it succeeds it just uses that. If not it starts
+          splitting up the source at the camel case parts from the right side
+          into a head and a tail and tries to find the according property,
+          e.g. <code class="literal">AddressZip</code> and <code class="literal">Code</code>. If
+          we find a property with that head we take the tail and continue
+          building the tree down from there. As in our case the first split
+          does not match we move the split point to the left
+          (<code class="literal">Address</code>, <code class="literal">ZipCode</code>).</p><p>Now although this should work for most cases, there might be
+          cases where the algorithm could select the wrong property. Suppose
+          our <code class="classname">Person</code> class has a
+          <code class="code">addressZip</code> property as well. Then our algorithm would
+          match in the first split round already and essentially choose the
+          wrong property and finally fail (as the type of
+          <code class="classname">addressZip</code> probably has no code property). To
+          resolve this ambiguity you can use <code class="literal">_</code> inside your
+          method name to manually define traversal points. So our method name
+          would end up like so:</p><pre class="programlisting">List&lt;Person&gt; findByAddress_ZipCode(ZipCode zipCode);
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repositories.special-parameters"></a>1.3.2.3.&nbsp;Special parameter handling</h4></div></div></div><p>To hand parameters to your query you simply define method
+        parameters as already seen in in examples above. Besides that we will
+        recognizes certain specific types to apply pagination and sorting to
+        your queries dynamically.</p><div class="example"><a name="d0e317"></a><p class="title"><b>Example&nbsp;1.4.&nbsp;Using Pageable and Sort in query methods</b></p><div class="example-contents"><pre class="programlisting">Page&lt;User&gt; findByLastname(String lastname, Pageable pageable);
+
+List&lt;User&gt; findByLastname(String lastname, Sort sort);
+
+List&lt;User&gt; findByLastname(String lastname, Pageable pageable);</pre></div></div><br class="example-break"><p>The first method allows you to pass a <code class="code">Pageable</code>
+        instance to the query method to dynamically add paging to your
+        statically defined query. <code class="code">Sorting</code> options are handed via
+        the <code class="interfacename">Pageable</code> instance, too. If you only
+        need sorting, simply add a <code class="code">Sort</code> parameter to your method.
+        As you also can see, simply returning a
+        <code class="interfacename">List</code> is possible as well. We will then
+        not retrieve the additional metadata required to build the actual
+        <code class="interfacename">Page</code> instance but rather simply
+        restrict the query to lookup only the given range of entities.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>To find out how many pages you get for a query entirely we
+          have to trigger an additional count query. This will be derived from
+          the query you actually trigger by default.</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e345"></a>1.3.3.&nbsp;Creating repository instances</h3></div></div></div><p>So now the question is how to create instances and bean
+      definitions for the repository interfaces defined.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e350"></a>1.3.3.1.&nbsp;Spring</h4></div></div></div><p>The easiest way to do so is by using the Spring namespace that
+        is shipped with each Spring Data module that supports the repository
+        mechanism. Each of those includes a repositories element that allows
+        you to simply define a base packge Spring shall scan for you.</p><pre class="programlisting">&lt;<span class="hl-tag">?xml version="1.0" encoding="UTF-8"?</span>&gt;
+&lt;<span class="hl-tag">beans:beans</span> <span class="hl-attribute">xmlns:beans</span>=<span class="hl-value">"http://www.springframework.org/schema/beans"</span>
+  <span class="hl-attribute">xmlns:xsi</span>=<span class="hl-value">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  <span class="hl-attribute">xmlns</span>=<span class="hl-value">"http://www.springframework.org/schema/data/jpa
+  xsi:schemaLocation="</span><span class="hl-attribute">http://www.springframework.org/schema/beans</span> 
+    <span class="hl-attribute">http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+    <span class="hl-attribute">http://www.springframework.org/schema/data/jpa</span>
+    <span class="hl-attribute">http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"&gt;</span>
+
+  <span class="hl-attribute">&lt;repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repositories"</span> /&gt;
+
+&lt;<span class="hl-tag">/beans:beans</span>&gt;</pre><p>In this case we instruct Spring to scan
+        <span class="package">com.acme.repositories</span> and all it's sub packages for
+        interfaces extending the appropriate
+        <code class="interfacename">Repository</code> sub-interface (in this case
+        <code class="interfacename">JpaRepository</code>). For each interface
+        found it will register the presistence technology specific
+        <code class="interfacename">FactoryBean</code> to create the according
+        proxies that handle invocations of the query methods. Each of these
+        beans will be registered under a bean name that is derived from the
+        interface name, so an interface of
+        <code class="interfacename">UserRepository</code> would be registered
+        under <code class="code">userRepository</code>. The <code class="code">base-package</code>
+        attribute allows to use wildcards, so that you can have a pattern of
+        packages parsed.</p><div class="simplesect" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e380"></a>Using filters</h5></div></div></div><p>By default we will pick up every interface extending the
+          persistence technology specific
+          <code class="interfacename">Repository</code> sub-interface located
+          underneath the configured base package and create a bean instance
+          for it. However, you might want to gain finer grained control over
+          which interfaces bean instances get created for. To do this we
+          support the use of <code class="code">&lt;include-filter /&gt;</code> and
+          <code class="code">&lt;exclude-filter /&gt;</code> elements inside
+          <code class="code">&lt;repositories /&gt;</code>. The semantics are exactly
+          equivalent to the elements in Spring's context namespace. For
+          details see <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://static.springsource.org/spring/docs/2.5.x/reference/beans.html#beans-scanning-filters" target="_top">Spring reference documentation</a> on these
+          elements.</p><p>E.g. to exclude certain interfaces from instantiation as
+          repository, you could use the following configuration:</p><div class="example"><a name="d0e402"></a><p class="title"><b>Example&nbsp;1.5.&nbsp;Using exclude-filter element</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repositories"</span>&gt;
+  &lt;<span class="hl-tag">context:exclude-filter</span> <span class="hl-attribute">type</span>=<span class="hl-value">"regex"</span> <span class="hl-attribute">expression</span>=<span class="hl-value">".*SomeRepository"</span> /&gt;
+&lt;<span class="hl-tag">/repositories</span>&gt;
+</pre><p>This would exclude all interface ending on
+            <code class="interfacename">SomeRepository</code> from being
+            instantiated.</p></div></div><br class="example-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h5 class="title"><a name="d0e412"></a>Manual configuration</h5></div></div></div><p>If you'd rather like to manually define which repository
+          instances to create you can do this with nested <code class="code">&lt;repository
+          /&gt;</code> elements.</p><pre class="programlisting">&lt;<span class="hl-tag">repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repositories"</span>&gt;
+  &lt;<span class="hl-tag">repository</span> <span class="hl-attribute">id</span>=<span class="hl-value">"userRepository"</span> /&gt;
+&lt;<span class="hl-tag">/repositories</span>&gt;
+</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e422"></a>1.3.3.2.&nbsp;Standalone usage</h4></div></div></div><p>You can also use the repository infrastructure outside of a
+        Spring container usage. You will still need to have some of the Spring
+        libraries on your classpath but you can generally setup repositories
+        programatically as well. The Spring Data modules providing repository
+        support ship a persistence technology specific RepositoryFactory that
+        can be used as follows:</p><div class="example"><a name="d0e427"></a><p class="title"><b>Example&nbsp;1.6.&nbsp;Standalone usage of repository factory</b></p><div class="example-contents"><pre class="programlisting">RepositoryFactorySupport factory = &#8230; // Instantiate factory here
+UserRepository repository = factory.getRepository(UserRepository.class);</pre></div></div><br class="example-break"></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="repositories.custom-implementations"></a>1.4.&nbsp;Custom implementations</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="repositories.single-repository-behaviour"></a>1.4.1.&nbsp;Adding behaviour to single repositories</h3></div></div></div><p>Often it is necessary to provide a custom implementation for a few
+      repository methods. Spring Data repositories easily allow provide custom
+      repository code and integrate it with generic CRUD abstraction and query
+      method functionality. To enrich a repository with custom functionality
+      you have to define an interface and an implementation for that
+      functionality first and let the repository interface you provided so far
+      extend that custom interface.</p><div class="example"><a name="d0e440"></a><p class="title"><b>Example&nbsp;1.7.&nbsp;Interface for custom repository functionality</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">interface</span> UserRepositoryCustom {
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> someCustomMethod(User user);
+}</pre></div></div><br class="example-break"><div class="example"><a name="d0e445"></a><p class="title"><b>Example&nbsp;1.8.&nbsp;Implementation of custom repository functionality</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">class</span> UserRepositoryImpl <span class="hl-keyword">implements</span> UserRepositoryCustom {
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> someCustomMethod(User user) {
+    <span class="hl-comment">// Your custom implementation</span>
+  }
+}</pre><p>Note that the implementation itself does not depend on
+        Spring Data and can be a regular Spring bean. So you can either use
+        standard dependency injection behaviour to inject references to other
+        beans, take part in aspects and so on.</p></div></div><br class="example-break"><div class="example"><a name="d0e452"></a><p class="title"><b>Example&nbsp;1.9.&nbsp;Changes to the your basic repository interface</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> UserRepository <span class="hl-keyword">extends</span> JpaRepository&lt;User, Long&gt;, UserRepositoryCustom {
+
+  <span class="hl-comment">// Declare query methods here</span>
+}</pre><p>Let your standard repository interface extend the custom
+        one. This makes CRUD and custom functionality available to
+        clients.</p></div></div><br class="example-break"><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e459"></a>Configuration</h4></div></div></div><p>If you use namespace configuration the repository infrastructure
+        tries to autodetect custom implementations by looking up classes in
+        the package we found a repository using the naming conventions
+        appending the namespace element's attribute
+        <code class="code">repository-impl-postfix</code> to the classname. This suffix
+        defaults to <code class="code">Impl</code>.</p><div class="example"><a name="d0e470"></a><p class="title"><b>Example&nbsp;1.10.&nbsp;Configuration example</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repository"</span>&gt;
+  &lt;<span class="hl-tag">repository</span> <span class="hl-attribute">id</span>=<span class="hl-value">"userRepository"</span> /&gt;
+&lt;<span class="hl-tag">/repositories</span>&gt;
+
+&lt;<span class="hl-tag">repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repository"</span> <span class="hl-attribute">repository-impl-postfix</span>=<span class="hl-value">"FooBar"</span>&gt;
+  &lt;<span class="hl-tag">repository</span> <span class="hl-attribute">id</span>=<span class="hl-value">"userRepository"</span> /&gt;
+&lt;<span class="hl-tag">/repositories</span>&gt;</pre></div></div><br class="example-break"><p>The first configuration example will try to lookup a class
+        <code class="classname">com.acme.repository.UserRepositoryImpl</code> to act
+        as custom repository implementation, where the second example will try
+        to lookup
+        <code class="classname">com.acme.repository.UserRepositoryFooBar</code>.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e484"></a>Manual wiring</h4></div></div></div><p>The approach above works perfectly well if your custom
+        implementation uses annotation based configuration and autowring
+        entirely as will be trated as any other Spring bean. If your customly
+        implemented bean needs some special wiring you simply declare the bean
+        and name it after the conventions just descibed. We will then pick up
+        the custom bean by name rather than creating an own instance.</p><div class="example"><a name="d0e489"></a><p class="title"><b>Example&nbsp;1.11.&nbsp;Manual wiring of custom implementations (I)</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repository"</span>&gt;
+  &lt;<span class="hl-tag">repository</span> <span class="hl-attribute">id</span>=<span class="hl-value">"userRepository"</span> /&gt;
+&lt;<span class="hl-tag">/repositories</span>&gt;
+
+&lt;<span class="hl-tag">beans:bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"userRepositoryImpl"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"&#8230;"</span>&gt;
+  &lt;<span class="hl-comment">!-- further configuration --</span>&gt;
+&lt;<span class="hl-tag">/beans:bean</span>&gt;</pre><p>This also works if you use automatic repository lookup without
+          defining single <code class="code">&lt;repository /&gt;</code> elements.</p></div></div><br class="example-break"><p>In case you are not in control of the implementation bean name
+        (e.g. if you wrap a generic repository facade around an existing
+        repository implementation) you can explicitly tell the
+        <code class="code">&lt;repository /&gt;</code> element which bean to use as custom
+        implementation by using the <code class="code">repository-impl-ref</code>
+        attribute.</p><div class="example"><a name="d0e507"></a><p class="title"><b>Example&nbsp;1.12.&nbsp;Manual wiring of custom implementations (II)</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repository"</span>&gt;
+  &lt;<span class="hl-tag">repository</span> <span class="hl-attribute">id</span>=<span class="hl-value">"userRepository"</span> <span class="hl-attribute">repository-impl-ref</span>=<span class="hl-value">"customRepositoryImplementation"</span> /&gt;
+&lt;<span class="hl-tag">/repositories</span>&gt;
+
+&lt;<span class="hl-tag">bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"customRepositoryImplementation"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"&#8230;"</span>&gt;
+  &lt;<span class="hl-comment">!-- further configuration --</span>&gt;
+&lt;<span class="hl-tag">/bean</span>&gt;</pre></div></div><br class="example-break"></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="repositories.custom-behaviour-for-all-repositories"></a>1.4.2.&nbsp;Adding custom behaviour to all repositories</h3></div></div></div><p>In other cases you might want to add a single method to all of
+      your repository interfaces. So the approach just shown is not feasible.
+      The first step to achieve this is adding and intermediate interface to
+      declare the shared behaviour</p><div class="example"><a name="d0e518"></a><p class="title"><b>Example&nbsp;1.13.&nbsp;An interface declaring custom shared behaviour</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> MyRepository&lt;T, ID <span class="hl-keyword">extends</span> Serializable&gt; 
+  <span class="hl-keyword">extends</span> JpaRepository&lt;T, ID&gt; {
+
+  <span class="hl-keyword">void</span> sharedCustomMethod(ID id);
+}</pre></div></div><br class="example-break"><p>Now your individual repository interfaces will extend this
+      intermediate interface to include the functionality declared. The second
+      step is to create an implementation of this interface that extends the
+      persistence technology specific repository base class which will act as
+      custom base class for the repository proxies then.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>If you're using automatic repository interface detection using
+        the Spring namespace using the interface just as is will cause Spring
+        trying to create an instance of
+        <code class="interfacename">MyRepository</code>. This is of course not
+        desired as it just acts as indermediate between
+        <code class="interfacename">Repository</code> and the actual repository
+        interfaces you want to define for each entity. To exclude an interface
+        extending <code class="interfacename">Repository</code> from being
+        instantiated as repository instance annotate it with
+        <code class="interfacename">@NoRepositoryBean</code>.</p></td></tr></table></div><div class="example"><a name="d0e541"></a><p class="title"><b>Example&nbsp;1.14.&nbsp;Custom repository base class</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyRepositoryImpl&lt;T, ID <span class="hl-keyword">extends</span> Serializable&gt; 
+  <span class="hl-keyword">extends</span> SimpleJpaRepository&lt;T, ID&gt; <span class="hl-keyword">implements</span> MyRepository&lt;T, ID&gt; {
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> sharedCustomMethod(ID id) {
+    <span class="hl-comment">// implementation goes here</span>
+  } 
+}</pre></div></div><br class="example-break"><p>The last step to get this implementation used as base class for
+      Spring Data repositores is replacing the standard
+      <code class="classname">RepositoryFactoryBean</code> with a custom one using a
+      custom <code class="classname">RepositoryFactory</code> that in turn creates
+      instances of your <code class="classname">MyRepositoryImpl</code> class.</p><div class="example"><a name="d0e557"></a><p class="title"><b>Example&nbsp;1.15.&nbsp;Custom repository factory bean</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyRepositoryFactoryBean&lt;T <span class="hl-keyword">extends</span> JpaRepository&lt;?, ?&gt; 
+  <span class="hl-keyword">extends</span> JpaRepositoryFactoryBean&lt;T&gt; {
+
+  <span class="hl-keyword">protected</span> RepositoryFactorySupport getRepositoryFactory(&#8230;) {
+    <span class="hl-keyword">return</span> <span class="hl-keyword">new</span> MyRepositoryFactory(&#8230;);
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">class</span> MyRepositoryFactory <span class="hl-keyword">extends</span> JpaRepositoryFactory{
+
+    <span class="hl-keyword">public</span> MyRepositoryImpl getTargetRepository(&#8230;) {
+      <span class="hl-keyword">return</span> <span class="hl-keyword">new</span> MyRepositoryImpl(&#8230;);
+    }
+
+    <span class="hl-keyword">public</span> Class&lt;? <span class="hl-keyword">extends</span> RepositorySupport&gt; getRepositoryClass() {
+      <span class="hl-keyword">return</span> MyRepositoryImpl.<span class="hl-keyword">class</span>;
+    }
+  }
+}</pre></div></div><br class="example-break"><p>Finally you can either declare beans of the custom factory
+      directly or use the <code class="code">factory-class</code> attribute of the Spring
+      namespace to tell the repository infrastructure to use your custom
+      factory implementation.</p><div class="example"><a name="d0e567"></a><p class="title"><b>Example&nbsp;1.16.&nbsp;Using the custom factory with the namespace</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">repositories</span> <span class="hl-attribute">base-package</span>=<span class="hl-value">"com.acme.repository"</span> 
+  <span class="hl-attribute">factory-class</span>=<span class="hl-value">"com.acme.MyRepositoryFactoryBean"</span> /&gt;</pre></div></div><br class="example-break"></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="jpa.repositories"></a>Chapter&nbsp;2.&nbsp;JPA Repositories</h2></div></div></div><div class="abstract"><p class="title"><b>Abstract</b></p><p>This chapter includes details of the JPA repository
+    implementation.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jpa.query-methods"></a>2.1.&nbsp;Query methods</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jpa.sample-app.finders.strategies"></a>2.1.1.&nbsp;Query lookup strategies</h3></div></div></div><p>The JPA module supports defining a query manually as String or
+      have it being derived from the method name.</p><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e586"></a>Declared queries</h4></div></div></div><p>Although getting a query derived from the method name is quite
+        convenient one might face the situation in which either the method
+        name parser does not support the keyword one wants to use or the
+        method name would get unnecessarily ugly. So you can either use JPA
+        named queries through a naming convention (see <a href="#jpa.query-methods.named-queries" title="2.1.3.&nbsp;Using JPA NamedQueries">Section&nbsp;2.1.3, &#8220;Using JPA NamedQueries&#8221;</a> for more information) or
+        rather annotate your query method with
+        <code class="interfacename">@Query</code> (see as for details).</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e596"></a>Strategies</h4></div></div></div><p>This strategy tries to find a declared query that can either be
+        defined using JPA <code class="code">@NamedQuery</code> means or Hades
+        <code class="code">@Query</code> annotation (see <a href="#jpa.query-methods.named-queries" title="2.1.3.&nbsp;Using JPA NamedQueries">Section&nbsp;2.1.3, &#8220;Using JPA NamedQueries&#8221;</a> and <a href="#jpa.query-methods.at-query" title="2.1.4.&nbsp;Using @Query">Section&nbsp;2.1.4, &#8220;Using @Query&#8221;</a> for details). If no declared
+        query is found execution of the query will fail.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e611"></a>CREATE_IF_NOT_FOUND (default)</h4></div></div></div><p>This strategy is actually a combination of the both mentioned
+        above. It will try to lookup a declared query first but create a
+        custom method name based query if no named query was found. This is
+        default lookup strategy and thus will be used if you don't configure
+        anything explicitly. It allows quick query definition by method names
+        but also custom tuning of these queries by introducing declared
+        queries for those who need explicit tuning.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jpa.query-methods.query-creation"></a>2.1.2.&nbsp;Query creation</h3></div></div></div><p>Generally the query creation mechanism for JPA works as described
+      in <a href="#repositories.query-methods" title="1.3.&nbsp;Query methods">Section&nbsp;1.3, &#8220;Query methods&#8221;</a>. Here's a short example
+      of what a JPA query method translates into:</p><div class="example"><a name="d0e623"></a><p class="title"><b>Example&nbsp;2.1.&nbsp;Query creation from method names</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> UserRepository <span class="hl-keyword">extends</span> Repository&lt;User, Long&gt; {
+
+  List&lt;User&gt; findByEmailAddressAndLastname(String emailAddress, String lastname);
+}</pre><p>We will create a query using the JPA criteria API from this
+          but essentially this translates into the following query:</p><pre class="programlisting">select u from User u where u.emailAddress = ?1 and u.lastname = ?2</pre><p>Spring Data JPA will do a property check and traverse nested
+          properties like described in <a href="#repositories.query-methods.property-expressions" title="1.3.2.2.1.&nbsp;Property expressions">Section&nbsp;1.3.2.2.1, &#8220;Property expressions&#8221;</a>. Here's
+          an overview of the keywords supported for JPA and what a method
+          containing that keyword essentially translates to.</p></div></div><p><br class="example-break"></p><div class="table"><a name="d0e637"></a><p class="title"><b>Table&nbsp;2.1.&nbsp;Supported keywords inside method names</b></p><div class="table-contents"><table summary="Supported keywords inside method names" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Keyword</th><th>Sample</th><th>JPQL snippet</th></tr></thead><tbody><tr><td><code class="code">And</code></td><td><code class="code">findByLastnameAndFirstname</code></td><td><code class="code">&#8230; where x.lastname = ?1 and x.firstname =
+                ?2</code></td></tr><tr><td><code class="code">Or</code></td><td><code class="code">findByLastnameOrFirstname</code></td><td><code class="code">&#8230; where x.lastname = ?1 or x.firstname =
+                ?2</code></td></tr><tr><td><code class="code">Between</code></td><td><code class="code">findByStartDateBetween</code></td><td><code class="code">&#8230; where x.startDate between 1? and
+                ?2</code></td></tr><tr><td><code class="code">LessThan</code></td><td><code class="code">findByAgeLessThan</code></td><td><code class="code">&#8230; where x.age &lt; ?1</code></td></tr><tr><td><code class="code">GreaterThan</code></td><td><code class="code">findByAgeGreaterThan</code></td><td><code class="code">&#8230; where x.age &gt; ?1</code></td></tr><tr><td><code class="code">IsNull</code></td><td><code class="code">findByAgeIsNull</code></td><td><code class="code">&#8230; where x.age is null</code></td></tr><tr><td><code class="code">IsNotNull,NotNull</code></td><td><code class="code">findByAge(Is)NotNull</code></td><td><code class="code">&#8230; where x.age not null</code></td></tr><tr><td><code class="code">Like</code></td><td><code class="code">findByFirstnameLike</code></td><td><code class="code">&#8230; where x.firstname like ?1</code></td></tr><tr><td><code class="code">NotLike</code></td><td><code class="code">findByFirstnameNotLike</code></td><td><code class="code">&#8230; where x.firstname not like ?1</code></td></tr><tr><td><code class="code">OrderBy</code></td><td><code class="code">findByAgeOrderByLastnameDesc</code></td><td><code class="code">&#8230; where x.age = ?1 order by x.lastname
+                desc</code></td></tr><tr><td><code class="code">Not</code></td><td><code class="code">findByLastnameNot</code></td><td><code class="code">&#8230; where x.lastname &lt;&gt; ?1</code></td></tr><tr><td><code class="code">In</code></td><td><code class="code">findByAgeIn(Collection&lt;Age&gt;
+                ages)</code></td><td><code class="code">&#8230; where x.age in ?1</code></td></tr><tr><td><code class="code">NotIn</code></td><td><code class="code">findByAgeNotIn(Collection&lt;Age&gt;
+                age)</code></td><td><code class="code">&#8230; where x.age not in ?1</code></td></tr></tbody></table></div></div><p><br class="table-break"></p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p><code class="code">In</code> and <code class="code">NotIn</code> also take any subclass
+          of <code class="interfacename">Collection</code> as parameter as well as
+          arrays or varargs.</p></td></tr></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jpa.query-methods.named-queries"></a>2.1.3.&nbsp;Using JPA NamedQueries</h3></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>The examples use simple <code class="code">&lt;named-query /&gt;</code>
+        element and <code class="code">@NamedQuery</code> annotation. The queries for these
+        configuration elements have to be defined in JPA query language. Of
+        course you can use <code class="code">&lt;named-native-query /&gt;</code> or
+        <code class="code">@NamedNativeQuery</code>, too. These elements allow you to
+        define the query in native SQL by losing the database platform
+        independence.</p></td></tr></table></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e812"></a>XML named query definition</h4></div></div></div><p>To use XML configuration simply add the necessary
+        <code class="code">&lt;named-query /&gt;</code> element to the
+        <code class="filename">orm.xml</code> JPA configuration file located in
+        <code class="filename">META-INF</code> folder of your classpath. Automatic
+        invocation of named queries is enabled by using some defined naming
+        convention. For more details see below.</p><div class="example"><a name="d0e826"></a><p class="title"><b>Example&nbsp;2.2.&nbsp;XML named query configuration</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">named-query</span> <span class="hl-attribute">name</span>=<span class="hl-value">"User.findByLastname"</span>&gt;
+  &lt;<span class="hl-tag">query</span>&gt;select u from User u where u.lastname = ?1&lt;<span class="hl-tag">/query</span>&gt;
+&lt;<span class="hl-tag">/named-query</span>&gt;</pre></div></div><br class="example-break"><p>As you can see the query has a special name which will be used
+        to resolve it at runtime.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e833"></a>Annotation configuration</h4></div></div></div><p>Annotation configuration has the advantage not to need another
+        config file to be edited, probably lowering maintenance cost. You pay
+        for that benefit by the need to recompile your domain class for every
+        new query declaration.</p><div class="example"><a name="d0e838"></a><p class="title"><b>Example&nbsp;2.3.&nbsp;Annotation based named query configuration</b></p><div class="example-contents"><pre class="programlisting">@Entity
+@NamedQuery(name = <span class="hl-string">"User.findByEmailAddress"</span>, 
+  query = <span class="hl-string">"select u from User u where u.emailAddress = ?1"</span>)
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> User {
+
+}</pre></div></div><br class="example-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e843"></a>Declaring interfaces</h4></div></div></div><p>To allow execution of this named query all you need to do is to
+        specify the <code class="interfacename">UserRepository</code> as
+        follows:</p><div class="example"><a name="d0e851"></a><p class="title"><b>Example&nbsp;2.4.&nbsp;Query method declaration in UserRepository</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> UserRepository <span class="hl-keyword">extends</span> JpaRepository&lt;User, Long&gt; {
+
+  List&lt;User&gt; findByLastname(String lastname);
+
+  User findByEmailAddress(String emailAddress);
+}</pre></div></div><br class="example-break"><p>Declaring this method we will try to resolve a call to this
+        method to a named query starting with the simple name of the
+        configured domain class followed by the method name separated by a
+        dot. So the example here would use the named queries defined above
+        instead of trying to create a query from the method name.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jpa.query-methods.at-query"></a>2.1.4.&nbsp;Using @Query</h3></div></div></div><p>Using named queries to declare queries for entities is a valid
+      approach and works fine for a small number amount of queries. As the
+      queries themselves are tied to a Java method to execute them you
+      actually can bind them to the query executing methods using Spring Data
+      JPA <code class="code">@Query</code> annotation rather than annotating them to the
+      domain class. This will free the domain class from persistence specific
+      information and colocate the query to the repository interface.</p><p>Querys annotated to the query method will trump queries defined
+      using <code class="code">@NamedQuery</code> or named queries declared in in
+      <code class="filename">orm.xml</code>.</p><div class="example"><a name="d0e874"></a><p class="title"><b>Example&nbsp;2.5.&nbsp;Declare query at the query method using @Query</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> UserRepository <span class="hl-keyword">extends</span> JpaRepository&lt;User, Long&gt; {
+
+  @Query(<span class="hl-string">"select u from User u where u.emailAddress = ?1"</span>)
+  User findByEmailAddress(String emailAddress);
+}</pre></div></div><br class="example-break"></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jpa.named-parameters"></a>2.1.5.&nbsp;Using named parameters</h3></div></div></div><p>By default Sprign Data JPA will use position based parameter
+      binding as described in all the samples above. This makes query methods
+      a little error prone to refactorings regarding the parameter position.
+      To solve this issue you can use <code class="code">@Param</code> annotation to give a
+      method parameter a concrete name and bind the name in the query:</p><div class="example"><a name="d0e887"></a><p class="title"><b>Example&nbsp;2.6.&nbsp;Using named parameters</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> UserRepository <span class="hl-keyword">extends</span> JpaRepository&lt;User, Long&gt; {
+
+  @Query(<span class="hl-string">"select u from User u where u.firstname = :firstname or u.lastname = :lastname"</span>)
+  User findByLastnameOrFirstname(@Param(<span class="hl-string">"lastname"</span>) String lastname,
+                                 @Param(<span class="hl-string">"firstname"</span>) String firstname);
+}</pre><p>Note that the method parameters are switched according to the
+        occurrence in the query defined.</p></div></div><br class="example-break"></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jpa.modifying-queries"></a>2.1.6.&nbsp;Modifying queries</h3></div></div></div><p>All the sections before described how to declare queries to access
+      a given entity or collection of entitites. Of course you can add custom
+      modifying behaviour by using facilities described in <a href="#">???</a>. As this approach is feasible for
+      comprehensive custom functionality, you can achieve the execution of
+      modifying queries that actually only need parameter binding by
+      annotating the query method with <code class="code">@Modifying</code>:</p><div class="example"><a name="d0e904"></a><p class="title"><b>Example&nbsp;2.7.&nbsp;Declaring manipulating queries</b></p><div class="example-contents"><pre class="programlisting">@Modifying
+@Query(<span class="hl-string">"update User u set u.firstname = ?1 where u.lastname = ?2"</span>)
+<span class="hl-keyword">int</span> setFixedFirstnameFor(String firstname, String lastname);</pre></div></div><br class="example-break"><p>This will trigger the query annotated to the method as updating
+      query instead of a selecting one. As the
+      <code class="interfacename">EntityManager</code> might contain outdated
+      entities after the execution of the modifying query, we automatically
+      clear it (see JavaDoc of
+      <code class="interfacename">EntityManager</code>.<code class="methodname">clear()</code>
+      for details). This will effectively drop all non-flushed changes still
+      pending in the <code class="interfacename">EntityManager</code>. If you
+      don't wish the <code class="interfacename">EntityManager</code> to be
+      cleared automatically you can set
+      <code class="interfacename">@Modifying</code> annotation's
+      <code class="code">clearAutomatically</code> attribute to
+      <code class="literal">false</code>;</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="specifications"></a>2.2.&nbsp;Specifications</h2></div></div></div><p>JPA 2 introduces a criteria API that can be used to build queries
+    programatically. Writing a criteria you actually define the where-clause
+    of a query for a query of the handled domain class. Taking another step
+    back these criterias can be regarded as predicate over the entity that is
+    verbalized by the JPA criteria API constraints.</p><p>Spring Data JPA now takes the concept of a specification from Eric
+    Evans' book Domain Driven Design, that carries the same semantics and
+    provides an API to define such
+    <code class="interfacename">Specification</code>s using the JPA criteria API.
+    Thus, there is a <code class="interfacename">JpaSpecificationExecutor</code>
+    interface you can additionally extend with your repository
+    interface:</p><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> CustomerRepository <span class="hl-keyword">extends</span> CrudRepository&lt;Customer, Long&gt;, JpaSpecificationExecutor {
+ &#8230;
+}</pre><p>The additional interface carries methods like this one, which allow
+    you to execute <code class="interfacename">Specification</code>s in a variety
+    of ways.</p><pre class="programlisting">List&lt;T&gt; readAll(Specification&lt;T&gt; spec);</pre><p>The <code class="interfacename">Specification</code> interface now looks
+    as follows:</p><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> Specification&lt;T&gt; {
+  Predicate toPredicate(Root&lt;T&gt; root, CriteriaQuery&lt;?&gt; query,
+            CriteriaBuilder builder);
+}</pre><p>Okay, so what is the typical use case?
+    <code class="interfacename">Specification</code>s can easily be used to build
+    an extensible set of predicates on top of an entity that then can be
+    combined and used with <code class="interfacename">JpaRepository</code>
+    without the need of declaring a query (method) for every needed
+    combination of those. Here's an example:</p><div class="example"><a name="d0e972"></a><p class="title"><b>Example&nbsp;2.8.&nbsp;Specifications for a Customer</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> CustomerSpecs {
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> Specification&lt;Customer&gt; isLongTermCustomer() {
+    <span class="hl-keyword">return</span> <span class="hl-keyword">new</span> Specification&lt;Customer&gt;() {
+      Predicate toPredicate(Root&lt;T&gt; root, CriteriaQuery&lt;?&gt; query,
+            CriteriaBuilder builder) {
+
+         LocalDate date = <span class="hl-keyword">new</span> LocalDate().minusYears(2);
+         <span class="hl-keyword">return</span> builder.lessThan(root.get(Customer_.createdAt), date);
+      }
+    };
+  }
+
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> Specification&lt;Customer&gt; hasSalesOfMoreThan(MontaryAmount value) {
+    <span class="hl-keyword">return</span> <span class="hl-keyword">new</span> Specification&lt;Customer&gt;() {
+      Predicate toPredicate(Root&lt;T&gt; root, CriteriaQuery&lt;?&gt; query,
+            CriteriaBuilder builder) {
+
+         <span class="hl-comment">// build query here</span>
+      }
+    };
+  }
+}</pre></div></div><br class="example-break"><p>Admittedly the amount of boilerplate leaves room for improvement
+    (that will hopefully be reduced by Java 8 closures) but the client side
+    becomes much nicer as you will see below. Besides that we have expressed
+    some criteria on a business requirement abstraction level and created
+    executable <code class="interfacename">Specification</code>s. So a client
+    might use a <code class="interfacename">Specification</code> as
+    follows:</p><div class="example"><a name="d0e985"></a><p class="title"><b>Example&nbsp;2.9.&nbsp;Using a simple Specification</b></p><div class="example-contents"><pre class="programlisting">List&lt;Customer&gt; customers = customerRepository.findAll(isLongTermCustomer());</pre></div></div><br class="example-break"><p>Okay, why not simply creating a query for this kind of data access?
+    You're right. Using a single <code class="interfacename">Specification</code>
+    does not gain a lot of benefit over a plain query declaration. The power
+    of <code class="interfacename">Specification</code>s really shines when you
+    combine them to create new <code class="interfacename">Specification</code>
+    objects. You can achieve this through the
+    <code class="classname">Specifications</code> helper class we provide to build
+    expressions like this:</p><div class="example"><a name="d0e1004"></a><p class="title"><b>Example&nbsp;2.10.&nbsp;Combined Specifications</b></p><div class="example-contents"><pre class="programlisting">MonetaryAmount amount = <span class="hl-keyword">new</span> MonetaryAmount(200.0, Currencies.DOLLAR);
+List&lt;Customer&gt; customers = customerRepository.readAll(
+  where(isLongTermCustomer()).or(hasSalesOfMoreThan(amount)));</pre><p>As
+      you can see, <code class="classname">Specifications</code> offers some gluecode
+      methods to chain and combine
+      <code class="interfacename">Specification</code>s. Thus extending your data
+      access layer is just a matter of creating new
+      <code class="interfacename">Specification</code> implementations and
+      combining them with ones already existing.</p></div></div><br class="example-break"></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="transactions"></a>2.3.&nbsp;Transactionality</h2></div></div></div><p>CRUD methods on repository instances are transactional by default.
+    For reading operations the transaction configuration <code class="code">readOnly</code>
+    flag is set to true, all others are configured with a plain
+    <code class="classname">@Transactional</code> so that default transaction
+    configuration applies. For details see JavaDoc of
+    <code class="classname">Repository</code>. If you need to tweak transaction
+    configuration for one of the methods declared in
+    <code class="interfacename">Repository</code> simply redeclare the method in
+    your repository interface as follows:</p><div class="example"><a name="d0e1037"></a><p class="title"><b>Example&nbsp;2.11.&nbsp;Custom transaction configuration for CRUD</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> UserRepository <span class="hl-keyword">extends</span> JpaRepository&lt;User, Long&gt; {
+
+  @Override
+  @Transactional(timeout = 10)
+  <span class="hl-keyword">public</span> List&lt;User&gt; findAll();
+
+  <span class="hl-comment">// Further query method declarations</span>
+}</pre><p>This will cause the <code class="methodname">findAll()</code> method to
+      be executed with a timeout of 10 seconds and without the
+      <code class="code">readOnly</code> flag.</p></div></div><br class="example-break"><p>Another possibility to alter transactional behaviour is using a
+    facade or service implementation that typically covers more than one
+    repository. Its purpose is to define transactional boundaries for non-CRUD
+    operations:</p><div class="example"><a name="d0e1052"></a><p class="title"><b>Example&nbsp;2.12.&nbsp;Using a facade to define transactions for multiple repository
+      calls</b></p><div class="example-contents"><pre class="programlisting">@Service
+<span class="hl-keyword">class</span> UserManagementImpl <span class="hl-keyword">implements</span> UserManagement {
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">final</span> UserRepository userRepository;
+  <span class="hl-keyword">private</span> <span class="hl-keyword">final</span> RoleRepository roleRepository;
+
+  @Autowired
+  <span class="hl-keyword">public</span> UserManagementImpl(UserRepository userRepository, 
+    RoleRepository roleRepository) {
+    <span class="hl-keyword">this</span>.userRepository = userRepository;
+    <span class="hl-keyword">this</span>.roleRepository = roleRepository;
+  }
+
+  @Transactional
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> addRoleToAllUsers(String roleName) {
+
+    Role role = roleRepository.findByName(roleName);
+
+    <span class="hl-keyword">for</span> (User user : userRepository.readAll()) {
+      user.addRole(role);
+      userRepository.save(user);
+    }
+}</pre><p>This will cause call to
+      <code class="methodname">addRoleToAllUsers(&#8230;)</code> to run inside a
+      transaction (participating in an existing one or create a new one if
+      none already running). The transaction configuration at the repositories
+      will be neglected then as the outer transaction configuration determines
+      the actual one used. Note that you will have to activate
+      <code class="code">&lt;tx:annotation-driven /&gt;</code> explicitly to get annotation
+      based configuration at facades working. The example above assumes you're
+      using component scanning.</p></div></div><br class="example-break"><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="transactional-query-methods"></a>2.3.1.&nbsp;Transactional query methods</h3></div></div></div><p>To let your query methods be transactional simply use
+      <code class="interfacename">@Transactional</code> at the repository
+      interface you define.</p><div class="example"><a name="d0e1073"></a><p class="title"><b>Example&nbsp;2.13.&nbsp;Using @Transactional at query methods</b></p><div class="example-contents"><pre class="programlisting">@Transactional(readOnly = true)
+<span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> UserRepository <span class="hl-keyword">extends</span> JpaRepository&lt;User, Long&gt; {
+
+  List&lt;User&gt; findByLastname(String lastname);
+
+  @Modifying
+  @Transactional
+  @Query(<span class="hl-string">"delete from User u where u.active = false"</span>)
+  <span class="hl-keyword">void</span> deleteInactiveUsers();
+}</pre><p>Typically you will use the <code class="code">readOnly</code> flag set to
+        true as most of the query methods will be reading ones. In contrast to
+        that <code class="methodname">deleteInactiveUsers()</code> makes use of the
+        <code class="interfacename">@Modifying</code> annotation and overrides the
+        transaction configuration. Thus the method will be executed with
+        <code class="code">readOnly</code> flag set to false.</p></div></div><br class="example-break"><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>It's definitely reasonable to use transactions for read only
+        queries as we can mark them as such by setting the
+        <code class="code">readOnly</code> flag. This will not act as check that you do not
+        trigger a manipulating query nevertheless (although some databases
+        reject e.g. <code class="literal">INSERT</code> or <code class="literal">UPDATE</code>
+        statements inside a transaction set to be read only) but gets
+        propagated as hint to the underlying JDBC driver to do performance
+        optimizations. Furthermore Spring will do some optimizations to the
+        underlying JPA provider. E.g. when used with Hibernate the flush mode
+        is set to <code class="code">NEVER</code> when you configure a transaction as read
+        only which causes Hibernate to skip dirty checks that gets quite
+        noticeable on large object trees.</p></td></tr></table></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jpa.auditing"></a>2.4.&nbsp;Auditing</h2></div></div></div><p>Most applications will require some auditability for entities
+    allowing to track creation date and user and modification date and user.
+    Spring Data JPA provides facilities to add this audition information to
+    entity transparently by AOP means. To take part in this functionality your
+    domain classes have to implement a more advanced interface:</p><div class="example"><a name="d0e1112"></a><p class="title"><b>Example&nbsp;2.14.&nbsp;<code class="interfacename">Auditable</code> interface</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> Auditable&lt;U, ID <span class="hl-keyword">extends</span> Serializable&gt;
+        <span class="hl-keyword">extends</span> Persistable&lt;ID&gt; {
+
+    U getCreatedBy();
+
+    <span class="hl-keyword">void</span> setCreatedBy(U createdBy);
+
+    DateTime getCreatedDate();
+
+    <span class="hl-keyword">void</span> setCreated(Date creationDate);
+
+    U getLastModifiedBy();
+
+    <span class="hl-keyword">void</span> setLastModifiedBy(U lastModifiedBy);
+
+    DateTime getLastModifiedDate();
+
+    <span class="hl-keyword">void</span> setLastModified(Date lastModifiedDate);
+}</pre></div></div><br class="example-break"><p>As you can see the modifying entity itself only has to be an entity.
+    Mostly this will be some sort of User entity, so we chose U as parameter
+    type.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/admons/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>To minimize boilerplate code Spring Data JPA offers
+      <code class="classname">AbstractPersistable</code> and
+      <code class="classname">AbstractAuditable</code> base classes that implement and
+      preconfigure entities. Thus you can decide to only implement the
+      interface or enjoy more sophisticated support by extending the base
+      class.</p></td></tr></table></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1130"></a>General auditing configuration</h3></div></div></div><p>Spring Data JPA ships with an entity listener that can be used to
+      trigger capturing auditing information. So first you have to register
+      the <code class="classname">AuditingEntityListener</code> inside your
+      <code class="filename">orm.xml</code> to be used for all entities in your
+      persistence contexts:</p><div class="example"><a name="d0e1141"></a><p class="title"><b>Example&nbsp;2.15.&nbsp;Auditing configuration orm.xml</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">persistence-unit-metadata</span>&gt;
+  &lt;<span class="hl-tag">persistence-unit-defaults</span>&gt;
+    &lt;<span class="hl-tag">entity-listeners</span>&gt;
+      &lt;<span class="hl-tag">entity-listener</span> <span class="hl-attribute">class</span>=<span class="hl-value">"&#8230;.data.jpa.domain.support.AuditingEntityListener"</span> /&gt;
+    &lt;<span class="hl-tag">/entity-listeners</span>&gt;
+  &lt;<span class="hl-tag">/persistence-unit-defaults</span>&gt;
+&lt;<span class="hl-tag">/persistence-unit-metadata</span>&gt;</pre></div></div><br class="example-break"><p>Now activating auditing functionlity is just a matter of adding
+      the Spring Data JPA <code class="literal">auditing</code> namespace element to
+      your configuration:</p><div class="example"><a name="d0e1151"></a><p class="title"><b>Example&nbsp;2.16.&nbsp;Activating auditing in the Spring configuration</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">jpa:auditing</span> <span class="hl-attribute">auditor-aware-ref</span>=<span class="hl-value">"yourAuditorAwareBean"</span> /&gt;</pre></div></div><br class="example-break"><p>As you can see you have to provide a bean that implements the
+      <code class="interfacename">AuditorAware</code> interface which looks as
+      follows:</p><div class="example"><a name="d0e1161"></a><p class="title"><b>Example&nbsp;2.17.&nbsp;<code class="interfacename">AuditorAware</code> interface</b></p><div class="example-contents"><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> AuditorAware&lt;T, ID <span class="hl-keyword">extends</span> Serializable&gt; {
+
+    T getCurrentAuditor();
+}</pre></div></div><br class="example-break"><p>Usually you will have some kind of authentication component in
+      your application that tracks the user currently working with the system.
+      This component should be <code class="interfacename">AuditorAware</code> and
+      thus allow seemless tracking of the auditor.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jpa.misc"></a>2.5.&nbsp;Miscellaneous</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1176"></a>2.5.1.&nbsp;Merging persistence units</h3></div></div></div><p>Spring supports ahving multiple persistence units out of the box.
+      But sometimes you might wanna modularize your application but make sure
+      that all these module run inside a single persistence unit at runtime.
+      To do so Spring Data JPA offers a PersistenceUnitManager implementation
+      that automatically merges persistence units based on their name.</p><div class="example"><a name="d0e1181"></a><p class="title"><b>Example&nbsp;2.18.&nbsp;Using MergingPersistenceUnitmanager</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">bean</span> <span class="hl-attribute">class</span>=<span class="hl-value">"&#8230;.LocalContainerEntityManagerFactoryBean"</span>&gt;
+  &lt;<span class="hl-tag">property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"persistenceUnitManager"</span>&gt;
+    &lt;<span class="hl-tag">bean</span> <span class="hl-attribute">class</span>=<span class="hl-value">"&#8230;.MergingPersistenceUnitManager"</span> /&gt;
+  &lt;<span class="hl-tag">/property
+&lt;/bean</span>&gt;</pre></div></div><br class="example-break"></div></div></div></div><div class="part" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="appendix"></a>Part&nbsp;II.&nbsp;Appendix</h1></div></div></div><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="namespace-reference"></a>Appendix&nbsp;A.&nbsp;Namespace reference</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="namespace-dao-config"></a>A.1.&nbsp;The <code class="code">&lt;repositories /&gt;</code> element</h2></div></div></div><p>The <code class="code">&lt;repositories /&gt;</code> element acts as container
+    for <code class="code">&lt;repository /&gt;</code> elements or can be left empty to
+    trigger auto detection<sup>[<a name="d0e1207" href="#ftn.d0e1207">1</a>]</sup> of repository instances. Attributes defined for
+    <code class="code">&lt;repositories /&gt;</code> act are propagated to contained
+    <code class="code">&lt;repository /&gt;</code> elements but can be overridden of
+    course.</p><div class="table"><a name="d0e1218"></a><p class="title"><b>Table&nbsp;A.1.&nbsp;Attributes</b></p><div class="table-contents"><table summary="Attributes" border="1"><colgroup><col><col></colgroup><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody><tr><td><code class="code">base-package</code></td><td>Defines the package to be used to be scanned for repository
+            interfaces extending <code class="interfacename">*Repository</code>
+            (actual interface is determined by specific Spring Data module) in
+            auto detection mode. All packages below the configured package
+            will be scanned, too. In auto configuration mode (no nested
+            <code class="code">&lt;repository /&gt;</code> elements) wildcards are also
+            allowed.</td></tr><tr><td><code class="code">repository-impl-postfix</code></td><td>Defines the postfix to autodetect custom repository
+            implementations. Classes whose names end with the configured
+            postfix will be considered as candidates. Defaults to
+            <code class="code">Impl</code>.</td></tr><tr><td><code class="code">query-lookup-strategy</code></td><td>Determines the strategy to be used to create finder
+            queries. See <a href="#">???</a> for
+            details. Defaults to <code class="code">create-if-not-found</code>.</td></tr></tbody></table></div></div><br class="table-break"></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="namespace-dao"></a>A.2.&nbsp;The <code class="code">&lt;repository /&gt;</code> element</h2></div></div></div><p>The <code class="code">&lt;repository /&gt;</code> element can contain all
+    attributes of <code class="code">&lt;repositories /&gt;</code> except
+    <code class="code">base-package</code>. This will result in overriding the values
+    configured in the surrounding <code class="code">&lt;repositories /&gt;</code> element.
+    Thus here we will only document extended attributes.</p><div class="table"><a name="d0e1283"></a><p class="title"><b>Table&nbsp;A.2.&nbsp;Attributes</b></p><div class="table-contents"><table summary="Attributes" border="1"><colgroup><col><col></colgroup><tbody><tr><td><code class="code">id</code></td><td>Defines the id of the bean the repository instance will be
+            registered under as well as the repository interface name.</td></tr><tr><td><code class="code">custom-impl-ref</code></td><td>Defines a reference to a custom repository implementation
+            bean.</td></tr></tbody></table></div></div><br class="table-break"></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.d0e1207" href="#d0e1207">1</a>] </sup>see <a href="#">???</a></p></div></div></div><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="faq"></a>Appendix&nbsp;B.&nbsp;Frequently asked questions</h2></div></div></div><div class="qandaset"><table border="0" summary="Q and A Set"><col align="left" width="1%"><tbody><tr class="qandadiv"><td align="left" valign="top" colspan="2"><h3 class="title"><a name="d0e1306"></a>B.1. Common</h3></td></tr><tr class="question"><td align="left" valign="top"><a name="d0e1309"></a><a name="d0e1310"></a><b>B.1.1.</b></td><td align="left" valign="top"><p>I'd like to get more detailled logging information on what
+          methods are called inside
+          <code class="interfacename">JpaRepository</code>, e.g. How can I gain
+          them?</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>You can make use of
+          <code class="classname">CustomizableTraceInterceptor</code> provided by
+          Spring:</p><pre class="programlisting">&lt;<span class="hl-tag">bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"customizableTraceInterceptor"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"
+  org.springframework.aop.interceptor.CustomizableTraceInterceptor"</span>&gt;
+  &lt;<span class="hl-tag">property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"enterMessage"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"Entering $[methodName]($[arguments])"</span>/&gt;
+  &lt;<span class="hl-tag">property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"exitMessage"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"Leaving $[methodName](): $[returnValue]"</span>/&gt;
+&lt;<span class="hl-tag">/bean</span>&gt;
+
+&lt;<span class="hl-tag">aop:config</span>&gt;
+  &lt;<span class="hl-tag">aop:advisor</span> <span class="hl-attribute">advice-ref</span>=<span class="hl-value">"customizableTraceInterceptor"</span> 
+    <span class="hl-attribute">pointcut</span>=<span class="hl-value">"execution(public * org.sfw.data.jpa.repository.JpaRepository+.*(..))"</span>/&gt;
+&lt;<span class="hl-tag">/aop:config</span>&gt;</pre></td></tr><tr class="qandadiv"><td align="left" valign="top" colspan="2"><h3 class="title"><a name="d0e1324"></a>B.2. Infrastructure</h3></td></tr><tr class="question"><td align="left" valign="top"><a name="d0e1327"></a><a name="d0e1328"></a><b>B.2.1.</b></td><td align="left" valign="top"><p>Currently I have implemented a repository layer based on
+          <code class="classname">HibernateDaoSupport</code>. I create a
+          <code class="classname">SessionFactory</code> by using Spring's
+          <code class="classname">AnnotationSessionFactoryBean</code>. How do I get
+          Hades DAOs working in this environment.</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>You have to replace
+          <code class="classname">AnnotationSessionFactoryBean</code> with the
+          <code class="classname">LocalContainerEntityManagerFactoryBean</code>.
+          Supposed you have registered it under
+          <code class="code">entityManagerFactory</code> you can reference it in you
+          repositories based on <code class="classname">HibernateDaoSupport</code> as
+          follows:</p><div class="example"><a name="d0e1355"></a><p class="title"><b>Example&nbsp;B.1.&nbsp;Looking up a SessionFactory from an
+            HibernateEntityManagerFactory</b></p><div class="example-contents"><pre class="programlisting">&lt;<span class="hl-tag">bean</span> <span class="hl-attribute">class</span>=<span class="hl-value">"com.acme.YourDaoBasedOnHibernateDaoSupport"</span>&gt;
+  &lt;<span class="hl-tag">property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"sessionFactory"</span>&gt;
+    &lt;<span class="hl-tag">bean</span> <span class="hl-attribute">factory-bean</span>=<span class="hl-value">"entityManagerFactory"</span> 
+      <span class="hl-attribute">factory-method</span>=<span class="hl-value">"getSessionFactory"</span> /&gt;
+  &lt;<span class="hl-tag">/property</span>&gt;
+&lt;<span class="hl-tag">/bean</span>&gt;</pre></div></div><br class="example-break"></td></tr><tr class="qandadiv"><td align="left" valign="top" colspan="2"><h3 class="title"><a name="d0e1360"></a>B.3. Auditing</h3></td></tr><tr class="question"><td align="left" valign="top"><a name="d0e1363"></a><a name="d0e1364"></a><b>B.3.1.</b></td><td align="left" valign="top"><p>I want to use Spring Data JPA auditing capabilities but have
+          my database already set up to set modification and creation date on
+          entities. How to prevent Hades to set the date
+          programmatically.</p></td></tr><tr class="answer"><td align="left" valign="top"></td><td align="left" valign="top"><p>Just use the <code class="code">set-dates</code> attribute of the
+          <code class="code">auditing</code> namespace element to false.</p></td></tr></tbody></table></div></div><div class="glossary"><div class="titlepage"><div><div><h2 class="title"><a name="glossary"></a>Glossary</h2></div></div></div><div class="glossdiv"><h3 class="title">A</h3><dl><dt>AOP</dt><dd><p>Aspect oriented programming</p></dd></dl></div><div class="glossdiv"><h3 class="title">C</h3><dl><dt>Commons DBCP</dt><dd><p>Commons DataBase Connection Pools - Library of the Apache
+          foundation offering pooling implementations of the
+          <code class="interfacename">DataSource</code> interface.</p></dd><dt>CRUD</dt><dd><p>Create, Read, Update, Delete - Basic persistence
+          operations</p></dd></dl></div><div class="glossdiv"><h3 class="title">D</h3><dl><dt>DAO</dt><dd><p>Data Access Object - Pattern to separate persisting logic from
+          the object to be persisted</p></dd><dt>Dependency Injection</dt><dd><p>Pattern to hand a component's dependency to the component from
+          outside, freeing the component to lookup the dependant itself. For
+          more information see <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://en.wikipedia.org/wiki/Dependency_Injection" target="_top">http://en.wikipedia.org/wiki/Dependency_Injection</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">E</h3><dl><dt>EclipseLink</dt><dd><p>Object relational mapper implementing JPA - <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.eclipselink.org" target="_top">http://www.eclipselink.org</a></p></dd></dl></div><div class="glossdiv"><h3 class="title">H</h3><dl><dt>Hibernate</dt><dd><p>Object relational mapper implementing JPA - <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.hibernate.org" target="_top">http://www.hibernate.org</a></p></dd></dl></div><div class="glossdiv"><h3 class="title">J</h3><dl><dt>JPA</dt><dd><p>Java Persistence Api</p></dd></dl></div><div class="glossdiv"><h3 class="title">S</h3><dl><dt>Spring</dt><dd><p>Java application framework - <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.springframework.org" target="_top">http://www.springframework.org</a></p></dd></dl></div></div></div></div></body></html>

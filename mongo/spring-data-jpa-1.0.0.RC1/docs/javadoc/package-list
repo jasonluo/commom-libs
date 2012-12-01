@@ -1,0 +1,8 @@
+org.springframework.data.jpa.domain
+org.springframework.data.jpa.domain.support
+org.springframework.data.jpa.repository
+org.springframework.data.jpa.repository.config
+org.springframework.data.jpa.repository.query
+org.springframework.data.jpa.repository.support
+org.springframework.data.jpa.repository.utils
+org.springframework.data.jpa.support
